@@ -1,6 +1,6 @@
 FROM node:lts-alpine3.9
 MAINTAINER Chris Garrett (https://github.com/chris-garrett/docker-helo)
-LABEL description="HELO Server Image"
+LABEL description="HELO Server Image 20.05.23"
 
 ADD . /work/app
 WORKDIR /work/app

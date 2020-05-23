@@ -3,7 +3,7 @@ version: '3'
 
 vars:
   LINUX_VERSION: 3.9
-  IMAGE_VERSION: 20.05.22
+  IMAGE_VERSION: 20.05.23
   IMAGE_NAME: chrisgarrett/helo
 
 
@@ -53,7 +53,7 @@ tasks:
       DOCKER_TEMPLATE: |
         FROM node:lts-alpine{{.LINUX_VERSION}}
         MAINTAINER Chris Garrett (https://github.com/chris-garrett/docker-helo)
-        LABEL description=\"HELO Server Image\"
+        LABEL description=\"HELO Server Image {{.IMAGE_VERSION}}\"
 
         ADD . /work/app
         WORKDIR /work/app
