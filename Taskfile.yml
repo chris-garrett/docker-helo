@@ -3,7 +3,7 @@ version: '3'
 
 vars:
   LINUX_VERSION: 3.9
-  IMAGE_VERSION: 20.05.23
+  IMAGE_VERSION: 20.05.24
   IMAGE_NAME: chrisgarrett/helo
 
 
@@ -19,9 +19,8 @@ tasks:
   build:
     desc: Build the image
     deps: [prep]
-    dir: app
     cmds:
-      - docker build --rm=true -t {{.IMAGE_NAME}}:{{.IMAGE_VERSION}} -f ../Dockerfile . 
+      - docker build --rm=true -t {{.IMAGE_NAME}}:{{.IMAGE_VERSION}} .
 
   run:
     desc: Run the image once 
@@ -55,7 +54,7 @@ tasks:
         MAINTAINER Chris Garrett (https://github.com/chris-garrett/docker-helo)
         LABEL description=\"HELO Server Image {{.IMAGE_VERSION}}\"
 
-        ADD . /work/app
+        ADD app /work/app
         WORKDIR /work/app
 
         RUN set -x \\

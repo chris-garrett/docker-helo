@@ -10,7 +10,7 @@
 
 *nix
 ```
-docker run --rm -it -p 3000:3000 chrisgarrett/helo:20.05.23
+docker run --rm -it -p 3000:3000 chrisgarrett/helo:20.05.24
 ```
 
 
