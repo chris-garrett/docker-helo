@@ -1,0 +1,87 @@
+version: '3'
+
+
+vars:
+  LINUX_VERSION: 3.9
+  IMAGE_VERSION: 20.05.22
+  IMAGE_NAME: chrisgarrett/helo
+
+
+silent: true
+
+
+tasks:
+
+  default:
+    cmds:
+      - task -l
+
+  build:
+    desc: Build the image
+    deps: [prep]
+    dir: app
+    cmds:
+      - docker build --rm=true -t {{.IMAGE_NAME}}:{{.IMAGE_VERSION}} -f ../Dockerfile . 
+
+  run:
+    desc: Run the image once 
+    cmds:
+      - docker run --rm -it -p 3000:3000 {{.IMAGE_NAME}}:{{.IMAGE_VERSION}}
+
+  sh:
+    desc: Launch a shell interactively
+    cmds:
+      - docker run --rm -it {{.IMAGE_NAME}}:{{.IMAGE_VERSION}} ash
+
+  shroot:
+    desc: Launch a shell interactively as root
+    cmds:
+      - docker run --rm -it -u root {{.IMAGE_NAME}}:{{.IMAGE_VERSION}} ash
+
+  prep:
+    desc: Generates Dockerfile/Readme for this repo
+    cmds:
+      - echo "{{.DOCKER_TEMPLATE}}" > Dockerfile
+      - echo "{{.README_TEMPLATE}}" > README.md
+    sources:
+      - ./Taskfile.yml
+    generates:
+      - Dockerfile
+      - README.md
+    method: checksum      
+    vars:
+      DOCKER_TEMPLATE: |
+        FROM node:lts-alpine{{.LINUX_VERSION}}
+        MAINTAINER Chris Garrett (https://github.com/chris-garrett/docker-helo)
+        LABEL description=\"HELO Server Image\"
+
+        ADD . /work/app
+        WORKDIR /work/app
+
+        RUN set -x \\
+            && yarn install --production \\
+            && chown -R node:node /work
+
+        USER node
+        EXPOSE 3000
+        CMD [\"node\", \"src/index.js\"]
+      README_TEMPLATE: |
+        # docker-helo
+
+        * Utility image for testing network configuration. 
+
+        ## Versions
+        - Node LTS
+        - Alpine {{.LINUX_VERSION}}
+
+        ## Usage
+
+        *nix
+        \`\`\`
+        docker run --rm -it -p 3000:3000 {{.IMAGE_NAME}}:{{.IMAGE_VERSION}}
+        \`\`\`
+
+        
+        ## Credits
+
+        
