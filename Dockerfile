@@ -11,5 +11,5 @@ RUN set -x \
 
 USER node
 EXPOSE 3000
-CMD ["node", "src/index.js"]
+CMD ["node", "./src/index.js"]
 

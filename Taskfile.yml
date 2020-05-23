@@ -21,7 +21,7 @@ tasks:
     deps: [prep]
     dir: app
     cmds:
-      - docker build --rm=true -t {{.IMAGE_NAME}}:{{.IMAGE_VERSION}} -f ../Dockerfile . 
+      - docker build --no-cache --rm=true -t {{.IMAGE_NAME}}:{{.IMAGE_VERSION}} -f ../Dockerfile . 
 
   run:
     desc: Run the image once 
@@ -44,7 +44,7 @@ tasks:
       - echo "{{.DOCKER_TEMPLATE}}" > Dockerfile
       - echo "{{.README_TEMPLATE}}" > README.md
     sources:
-      - ./Taskfile.yml
+      - Taskfile.yml
     generates:
       - Dockerfile
       - README.md
@@ -64,7 +64,7 @@ tasks:
 
         USER node
         EXPOSE 3000
-        CMD [\"node\", \"src/index.js\"]
+        CMD [\"node\", \"./src/index.js\"]
       README_TEMPLATE: |
         # docker-helo
 
