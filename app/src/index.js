@@ -11,6 +11,7 @@ const server = http.createServer((req, res) => {
         uid: uid,
         date: new Date().toString(),
         request: {
+            url: req.url,
             method: req.method,
             headers: req.headers,
         },
